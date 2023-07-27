@@ -3,12 +3,25 @@ const db = require('./config/mongoose');
 const app = express();
 const port = 8000;
 
-//use exxpress router
-app.use( '/' , require('./routes/index' ));
+//URL Encoder
+app.use(express.urlencoded());
+
+//Setup Layouts
+const expressLayouts = require('express-ejs-layouts');
+app.use(expressLayouts);
+
+//Extract styles and scripts from subpages to the alyout
+app.set('layout extractStyles' , true);
+app.set('layout extractScripts' , true);
+
 
 //Setup ejs and views
 app.set( 'view engine' , 'ejs' ); 
 app.set('views' , './views' );
+
+
+//use exxpress router
+app.use( '/' , require('./routes/index' ));
 
 app.listen(port, function (err) {
     if (err) {
